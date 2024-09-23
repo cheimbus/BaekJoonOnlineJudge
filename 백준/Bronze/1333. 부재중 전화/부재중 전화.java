@@ -15,19 +15,18 @@ public class Main {
         
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < l; j++) {
-                sec.add(true);
-            }
-            
-            for(int k = 0; k < 5; k++) {
                 sec.add(false);
+            }
+            for(int k = 0; k < 5; k++) {
+                sec.add(true);
             }
         }
         
-        int result = 0;
-        while(sec.size() > result) {
-            if(!sec.get(result)) break;
-            result += d;
+        int res = 0;
+        while(sec.size() > res) {
+            if(sec.get(res)) break;
+            res += d;
         }
-        System.out.print(result);
+        System.out.print(res);
     }
 }
