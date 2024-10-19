@@ -13,58 +13,17 @@ public class Main {
 
         int month = Integer.parseInt(stk.nextToken());
         int day = Integer.parseInt(stk.nextToken());
+        String[] monArr = new String[]{"SUN","MON","TUE","WED","THU","FRI","SAT"};
+        int[] months = new int[]{0,31,28,31,30,31,30,31,31,30,31,30,31};
 
-        int currDay = 0;
-
-        switch(month) {
-            case 1:
-                currDay = 0;
-                break;
-            case 2:
-                currDay = 31;
-                break;
-            case 3:
-                currDay = 31 + 28;
-                break;
-            case 4:
-                currDay = 31 + 28 + 31;
-                break;
-            case 5:
-                currDay = 31 + 28 + 31 + 30;
-                break;
-            case 6:
-                currDay = 31 + 28 + 31 + 30 + 31;
-                break;
-            case 7:
-                currDay = 31 + 28 + 31 + 30 + 31 + 30;
-                break;
-            case 8:
-                currDay = 31 + 28 + 31 + 30 + 31 + 30 + 31;
-                break;
-            case 9:
-                currDay = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31;
-                break;
-            case 10:
-                currDay = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30;
-                break;
-            case 11:
-                currDay = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
-                break;
-            case 12:
-                currDay = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
-                break;
+        int mappingDay = 0;
+        for(int i = 0; i < month; i ++) {
+            mappingDay += months[i];
         }
 
-        currDay += day;
+        mappingDay += day;
         StringBuilder sb = new StringBuilder();
-
-        if(currDay % 7 == 1) sb.append("MON");
-        else if(currDay % 7 == 2) sb.append("TUE");
-        else if(currDay % 7 == 3) sb.append("WED");
-        else if(currDay % 7 == 4) sb.append("THU");
-        else if(currDay % 7 == 5) sb.append("FRI");
-        else if(currDay % 7 == 6) sb.append("SAT");
-        else if(currDay % 7 == 0) sb.append("SUN");
+        sb.append(monArr[mappingDay % 7]);
 
         bw.write(sb.toString());
         bw.flush();
