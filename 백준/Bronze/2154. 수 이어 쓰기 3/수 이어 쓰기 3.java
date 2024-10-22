@@ -17,20 +17,10 @@ public class Main {
         }
 
         String nNum = String.valueOf(n);
-        char[] cArr = sb.toString().toCharArray();
-        int len = String.valueOf(n).length();
 
-        int cnt = 0;
-        for(int i = 0; i < cArr.length - len + 1; i ++) {
-            cnt ++;
-            StringBuilder sb1 = new StringBuilder();
-            for(int j = i; j < i + len; j ++) {
-                sb1.append(cArr[j]);
-            }
-            if(nNum.equals(sb1.toString())) break;
-        }
+        int pos = sb.indexOf(nNum);
 
-        bw.write(cnt + "\n");
+        bw.write(pos + 1 + "\n");
         bw.flush();
         bw.close();
     }
