@@ -10,13 +10,8 @@ public class Main {
     public static int k, n;
 
     public static void findNum(int h, int m, int s) {
-        String curr = String.format("%02d%02d%02d", h, m, s);
-        char[] cArr = curr.toCharArray();
-        for(char c : cArr) {
-            if(Character.getNumericValue(c) == k) {
-                cnt ++;
-                break;
-            }
+        if(h % 10 == k || h / 10 == k || m % 10 == k || m / 10 == k || s % 10 == k || s / 10 == k) {
+            cnt ++;
         }
     }
 
