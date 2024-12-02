@@ -1,28 +1,23 @@
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static int n,m;
+    public static int n, m;
     public static StringBuilder sb = new StringBuilder();
-    public static ArrayList<Integer> arr = new ArrayList<>();
+    public static int[] arr;
 
-    public static void recursion(int currNum) {
-        if(currNum == m) {
-            for(int i = 0; i < arr.size(); i ++) {
-                sb.append(arr.get(i)).append(" ");
+    public static void dfs(int depth) {
+        if(depth == m) {
+            for(int i = 0; i < arr.length; i ++) {
+                sb.append(arr[i]+" ");
             }
             sb.append("\n");
             return;
         }
+
         for(int i = 1; i <= n; i ++) {
-            arr.add(i);
-            recursion(currNum + 1);
-            arr.remove(arr.size() - 1);
+            arr[depth] = i;
+            dfs(depth + 1);
         }
     }
 
@@ -34,10 +29,11 @@ public class Main {
         n = Integer.parseInt(stk.nextToken());
         m = Integer.parseInt(stk.nextToken());
 
-        recursion(0);
+        arr = new int[m];
+
+        dfs(0);
 
         bw.write(sb.toString());
         bw.flush();
-        br.close();
     }
 }
