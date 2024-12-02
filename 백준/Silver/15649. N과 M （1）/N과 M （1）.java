@@ -1,41 +1,28 @@
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static int n, m;
     public static StringBuilder sb = new StringBuilder();
-    public static ArrayList<Integer> arr = new ArrayList<>();
+    public static int[] arr;
+    public static boolean[] visited;
 
-    public static boolean possible() {
-        for(int i = 0; i < arr.size() - 1; i ++)
-            for(int j = i + 1; j < arr.size(); j ++) {
-                if(arr.get(i) == arr.get(j)) {
-                    return false;
-                }
-            }
-        return true;
-    }
-
-    public static void recursion(int currNum) {
-        if(currNum == m) {
-            for(int i = 0; i < arr.size(); i ++) {
-                sb.append(arr.get(i)).append(" ");
+    public static void dfs(int depth) {
+        if(depth == m) {
+            for(int i = 0; i < arr.length; i ++) {
+                sb.append(arr[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
 
-        for(int i = 1; i <= n; i ++) {
-            arr.add(i);
-            if(possible()) {
-                recursion(currNum + 1);
+        for(int i = 0; i < n; i ++) {
+            if(!visited[i]) {
+                visited[i] = true;
+                arr[depth] = i + 1;
+                dfs(depth + 1);
+                visited[i] = false;
             }
-            arr.remove(arr.size() - 1);
         }
     }
 
@@ -47,11 +34,12 @@ public class Main {
         n = Integer.parseInt(stk.nextToken());
         m = Integer.parseInt(stk.nextToken());
 
-        recursion(0);
+        arr = new int[m];
+        visited = new boolean[n];
+
+        dfs(0);
 
         bw.write(sb.toString());
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
