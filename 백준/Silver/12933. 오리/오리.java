@@ -1,39 +1,32 @@
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static char[] cArr;
+    public static char[] arr;
+    public static char[] tmp = new char[]{'q','u','a','c','k'};
     public static boolean[] visited;
-    public static char[] tmp = new char[]{'q', 'u', 'a', 'c', 'k'};
     public static int cnt;
 
     public static void impl() {
-        if(cArr[0] != 'q' || cArr.length % 5 != 0) {
+        if(arr[0] != 'q' || arr.length % 5 != 0) {
             cnt = -1;
             return;
         }
 
         int idx = 0;
-        for(int i = 0; i < cArr.length; i ++) {
-            ArrayList<Character> list = new ArrayList<>();
-            for(int j = i; j < cArr.length; j ++) {
-                if(!visited[j] && cArr[j] == tmp[idx]) {
+        for(int i = 0; i < arr.length; i ++) {
+            ArrayList<Character> li = new ArrayList<>();
+            for(int j = i; j < arr.length; j ++) {
+                if(!visited[j] && arr[j] == tmp[idx]) {
                     idx ++;
                     visited[j] = true;
-                    list.add(cArr[j]);
-
-                    if(idx == 5) {
-                        idx = 0;
-                    }
+                    li.add(arr[j]);
+                    if(idx == 5) idx = 0;
                 }
             }
-            if(!list.isEmpty()) {
-                if(list.get(list.size() - 1) != 'k') {
-                    cnt = - 1;
+            if(li.size() != 0) {
+                if(li.get(li.size() -1) != 'k') {
+                    cnt = -1;
                     return;
                 }
                 cnt ++;
@@ -45,8 +38,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        cArr = br.readLine().toCharArray();
-        visited = new boolean[cArr.length];
+        arr = br.readLine().toCharArray();
+        visited = new boolean[arr.length];
 
         impl();
 
