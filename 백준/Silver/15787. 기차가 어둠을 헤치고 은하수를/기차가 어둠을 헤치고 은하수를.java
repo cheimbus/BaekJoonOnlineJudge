@@ -37,15 +37,16 @@ public class Main {
     }
 
     public static void check() {
-        Set<List<Boolean>> uniqueRows = new LinkedHashSet<>();
-        for (boolean[] row : arr) {
-            List<Boolean> rowList = new ArrayList<>();
-            for (boolean value : row) {
-                rowList.add(value);
+        HashSet<List<Boolean>> set = new HashSet<>();
+
+        for(boolean[] a : arr) {
+            List<Boolean> li = new ArrayList<>();
+            for(int i = 0; i < a.length; i ++) {
+                li.add(a[i]);
             }
-            uniqueRows.add(rowList);
+            set.add(li);
         }
-        cnt = uniqueRows.size();
+        cnt = set.size();
     }
 
     public static void main(String[] args) throws IOException {
