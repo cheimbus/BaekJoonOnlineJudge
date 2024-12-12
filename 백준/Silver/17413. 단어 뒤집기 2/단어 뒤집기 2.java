@@ -1,9 +1,5 @@
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static char[] arr;
@@ -19,25 +15,26 @@ public class Main {
     public static void impl() {
         boolean flag = false;
         for(int i = 0; i < arr.length; i ++) {
-            if(arr[i] == '<') {
+            char val = arr[i];
+            if(val == '<') {
                 print();
-                sb.append(arr[i]);
+                sb.append('<');
                 flag = true;
             }
-            else if(arr[i] == '>') {
-                sb.append(arr[i]);
+            else if(val == '>') {
+                sb.append('>');
                 flag = false;
             }
             else if(flag) {
-                sb.append(arr[i]);
+                sb.append(val);
             }
             else {
-                if(arr[i] == ' ') {
+                if(val == ' ') {
                     print();
-                    sb.append(" ");
+                    sb.append(' ');
                 }
                 else {
-                    st.push(arr[i]);
+                    st.push(val);
                 }
             }
         }
