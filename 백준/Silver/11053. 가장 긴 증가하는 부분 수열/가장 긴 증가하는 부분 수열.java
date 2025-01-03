@@ -20,17 +20,15 @@ public class Main {
         }
 
         dp[0] = 0;
-
         for(int i = 1; i <= n; i ++) {
             for(int j = i - 1; j >= 0; j --) {
-                if(arr[i] > arr[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
+                if(arr[i] > arr[j]) dp[i] = Math.max(dp[i], dp[j] + 1);
             }
         }
-        int ans = 0;
+
+        int ans = Integer.MIN_VALUE;
         for(int i = 1; i <= n; i ++) {
-            ans = Math.max(dp[i], ans);
+            ans = Math.max(ans, dp[i]);
         }
 
         bw.write(ans + "");
