@@ -11,8 +11,7 @@ public class Main {
         int k = Integer.parseInt(stk.nextToken());
 
         int[] arr1 = new int[n + 1];
-        int[] arr2 = new int[n + 1];
-        int[] dp = new int[k + 1];
+        int[] arr2 = new int[k + 1];
 
         for(int i = 1; i <= n; i ++) {
             stk = new StringTokenizer(br.readLine());
@@ -21,9 +20,10 @@ public class Main {
             arr1[i] = a;
             arr2[i] = b;
         }
+        int[] dp = new int[k + 1];
 
         for(int i = 1; i <= n; i ++) {
-            for(int j = k; j >= 1; j --) {
+            for(int j = k; j >= arr1[i]; j --) {
                 if(j - arr1[i] >= 0) {
                     dp[j] = Math.max(dp[j], dp[j - arr1[i]] + arr2[i]);
                 }
