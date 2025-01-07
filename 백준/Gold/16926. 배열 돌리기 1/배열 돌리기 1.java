@@ -37,8 +37,8 @@ public class Main {
         int ny = m;
         int sx = 1;
         int sy = 1;
-
-        while(nx >= sx + 1 && ny >= sy + 1) {
+        int val = Math.min(n, m) / 2;
+        while(val -- > 0) {
             change(nx, ny, sx, sy);
             nx -= 1;
             ny -= 1;
