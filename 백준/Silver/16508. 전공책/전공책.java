@@ -2,41 +2,45 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    private static String targetString;
-    private static int n, minCost = Integer.MAX_VALUE;
-    private static int[] costs;
-    private static String[] books;
+    public static String s;
+    public static int n, ans = Integer.MAX_VALUE;
+    public static int[] arr1;
+    public static String[] arr2;
     public static ArrayList<Integer> arr = new ArrayList<>();
 
-    private static boolean canFormTarget() {
-        int[] targetCount = new int[26];
-        for (char c : targetString.toCharArray()) {
-            targetCount[c - 'A']++;
-        }
+    public static boolean possible() {
+        int[] a = new int[128];
+        int[] b = new int[128];
 
-        int[] combinedCount = new int[26];
-        for (int index : arr) {
-            for (char c : books[index].toCharArray()) {
-                combinedCount[c - 'A']++;
+        for(int i = 0; i < arr.size(); i ++) {
+            String ss = arr2[arr.get(i)];
+            for(int j = 0; j < ss.length(); j ++) {
+                a[ss.charAt(j) - 'A'] ++;
             }
         }
 
-        for (int i = 0; i < 26; i++) {
-            if (combinedCount[i] < targetCount[i]) {
-                return false;
-            }
+        for(int i = 0; i < s.length(); i ++) {
+            b[s.charAt(i) - 'A'] ++;
+        }
+
+        for(int i = 0; i < 128; i ++) {
+            if(a[i] < b[i]) return false;
         }
         return true;
     }
 
-    private static void dfs(int depth) {
-        if (depth == n) {
-            if (canFormTarget()) {
-                int totalCost = 0;
-                for (int index : arr) {
-                    totalCost += costs[index];
-                }
-                minCost = Math.min(minCost, totalCost);
+    public static void calc() {
+        int val = 0;
+        for(int i = 0; i < arr.size(); i ++) {
+            val += arr1[arr.get(i)];
+        }
+        ans = Math.min(ans, val);
+    }
+
+    public static void dfs(int depth) {
+        if(depth == n) {
+            if(possible()) {
+                calc();
             }
             return;
         }
@@ -51,23 +55,23 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        targetString = br.readLine();
+        s = br.readLine();
         n = Integer.parseInt(br.readLine());
+        arr1 = new int[n];
+        arr2 = new String[n];
 
-        costs = new int[n];
-        books = new String[n];
-
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            costs[i] = Integer.parseInt(st.nextToken());
-            books[i] = st.nextToken();
+        for(int i = 0; i < n; i ++) {
+            StringTokenizer stk = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(stk.nextToken());
+            String b = stk.nextToken();
+            arr1[i] = a;
+            arr2[i] = b;
         }
 
         dfs(0);
 
-        int ans = minCost == Integer.MAX_VALUE ? -1 : minCost;
-
-        bw.write(ans + "");
+        int ans2 = ans == Integer.MAX_VALUE ? -1 : ans;
+        bw.write(ans2 + "");
         bw.flush();
     }
 }
