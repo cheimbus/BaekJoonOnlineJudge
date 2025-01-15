@@ -5,28 +5,35 @@ public class Main {
     public static int n, m, ans;
     public static int[][] grid;
     public static boolean[] visited;
+    public static ArrayList<Integer> arr = new ArrayList<>();
+    public static StringBuilder sb = new StringBuilder();
+    public static void calc() {
+        int sum = 0;
+
+        for(int j = 0; j < n; j ++) {
+            int val = 0;
+            for(int k = 0; k < arr.size(); k ++) {
+                int idx = arr.get(k);
+                val = Math.max(val, grid[j][idx]);
+            }
+            sum += val;
+        }
+        ans = Math.max(ans, sum);
+    }
 
     public static void dfs(int depth, int at) {
         if(depth == 3) {
-            int val = 0;
-            for(int i = 0; i < n; i ++) {
-                int sum = 0;
-                for(int j = 0; j < m; j ++) {
-                    if(visited[j]) {
-                        sum = Math.max(sum, grid[i][j]);
-                    }
-                }
-                val += sum;
-                ans = Math.max(ans, val);
-            }
+            calc();
             return;
         }
 
         for(int i = at; i < m; i ++) {
             if(!visited[i]) {
                 visited[i] = true;
-                dfs(depth + 1, at + 1);
+                arr.add(i);
+                dfs(depth + 1, i);
                 visited[i] = false;
+                arr.remove(arr.size() - 1);
             }
         }
     }
