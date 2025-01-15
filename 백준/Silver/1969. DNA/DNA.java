@@ -2,51 +2,49 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer stk = new StringTokenizer(br.readLine());
 
+        StringTokenizer stk = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(stk.nextToken());
         int m = Integer.parseInt(stk.nextToken());
+        String[] sArr = new String[n];
         char[] cArr = new char[]{'A', 'C', 'G', 'T'};
-        int[] nArr = new int[m];
 
-        String[] arr = new String[n];
         for(int i = 0; i < n; i ++) {
-            arr[i] = br.readLine();
+            sArr[i] = br.readLine();
         }
 
-        int ans = 0;
-
+        int[] aArr = new int[m];
+        int val = 0;
         for(int i = 0; i < m; i ++) {
-            int[] tmp = new int[4];
+            int[] arr = new int[4];
             for(int j = 0; j < 4; j ++) {
                 for(int k = 0; k < n; k ++) {
-                    if(cArr[j] != arr[k].charAt(i)) {
-                        tmp[j] ++;
+                    if(cArr[j] != sArr[k].charAt(i)) {
+                        arr[j] ++;
                     }
                 }
             }
-            int min = Integer.MAX_VALUE;
-            int idx = 0;
+            int id = 0;
+            int val2 = Integer.MAX_VALUE;
             for(int b = 0; b < 4; b ++) {
-                if(min > tmp[b]) {
-                    min = tmp[b];
-                    idx = b;
+                if(val2 > arr[b]) {
+                    id = b;
+                    val2 = arr[b];
                 }
             }
-            nArr[i] = idx;
-            ans += min;
+            aArr[i] = id;
+            val += val2;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb1 = new StringBuilder();
         for(int i = 0; i < m; i ++) {
-            int val = nArr[i];
-            sb.append(cArr[val]);
+            sb1.append(cArr[aArr[i]]);
         }
         StringBuilder sb2 = new StringBuilder();
-        sb2.append(sb).append("\n").append(ans);
+        sb2.append(sb1).append("\n").append(val);
 
         bw.write(sb2.toString());
         bw.flush();
