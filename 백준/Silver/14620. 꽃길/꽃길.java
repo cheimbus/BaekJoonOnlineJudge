@@ -67,29 +67,56 @@ public class Main {
     }
 
     public static void dfs(int depth) {
-        if(depth == 3) {
+        if (depth == 3) {
             for(int i = 0; i < arr.size(); i ++) {
                 sb.append(arr.get(i).x).append(arr.get(i).y);
             }
             sb.append("\n");
-            if(possible()) {
+            if (possible()) {
                 ans = Math.min(ans, calc());
             }
             return;
         }
 
-        for(int i = 2; i <= n; i ++) {
-            for(int j = 2; j <= n; j ++) {
-                if(!visited[i][j]) {
-                    visited[i][j] = true;
-                    arr.add(new Pair(i, j));
-                    dfs(depth + 1);
-                    visited[i][j] = false;
-                    arr.remove(arr.size() - 1);
+        for (int i = 2; i <= n - 1; i++) {
+            for (int j = 2; j <= n - 1; j++) {
+                if (!visited[i][j]) {
+                    boolean isValid = true;
+
+                    // 현재 위치와 주변 5칸을 확인
+                    for (int k = 0; k < 5; k++) {
+                        int nx = i + dx[k];
+                        int ny = j + dy[k];
+                        if (!inRange(nx, ny) || visited[nx][ny]) {
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    if (isValid) {
+                        // 현재 위치와 주변 5칸 방문 처리
+                        for (int k = 0; k < 5; k++) {
+                            int nx = i + dx[k];
+                            int ny = j + dy[k];
+                            visited[nx][ny] = true;
+                        }
+                        arr.add(new Pair(i, j));
+
+                        dfs(depth + 1);
+
+                        // 현재 위치와 주변 5칸 방문 해제
+                        arr.remove(arr.size() - 1);
+                        for (int k = 0; k < 5; k++) {
+                            int nx = i + dx[k];
+                            int ny = j + dy[k];
+                            visited[nx][ny] = false;
+                        }
+                    }
                 }
             }
         }
     }
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
