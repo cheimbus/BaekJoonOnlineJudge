@@ -1,23 +1,28 @@
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 public class Main {
     public static int n, m;
-    public static StringBuilder sb = new StringBuilder();
     public static int[] arr;
+    public static boolean[] visited;
+    public static StringBuilder sb = new StringBuilder();
 
-    public static void dfs(int depth) {
+    public static void dfs(int depth, int at) {
         if(depth == m) {
             for(int i = 0; i < arr.length; i ++) {
-                sb.append(arr[i]+" ");
+                sb.append(arr[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
 
-        for(int i = 1; i <= n; i ++) {
-            arr[depth] = i;
-            dfs(depth + 1);
+        for(int i = at; i < n; i ++) {
+            arr[depth] = i + 1;
+            dfs(depth + 1, at);
         }
     }
 
@@ -30,8 +35,9 @@ public class Main {
         m = Integer.parseInt(stk.nextToken());
 
         arr = new int[m];
+        visited = new boolean[n];
 
-        dfs(0);
+        dfs(0, 0);
 
         bw.write(sb.toString());
         bw.flush();
