@@ -1,49 +1,38 @@
 import java.io.*;
 import java.util.*;
 
-class Pair {
-    int x;
-    int y;
-    public Pair(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 public class Main {
     public static int n, ans = Integer.MAX_VALUE;
-    public static ArrayList<Pair> arr = new ArrayList<>();
-    public static ArrayList<Pair> tmp = new ArrayList<>();
-
-    public static boolean possible() {
-        return tmp.size() != 0;
-    }
+    public static int[] arr1;
+    public static int[] arr2;
+    public static ArrayList<Integer> arr = new ArrayList<>();
 
     public static int calc() {
-        int xVal = 1;
-        int yVal = 0;
-        for(int i = 0; i < tmp.size(); i ++) {
-            int x = tmp.get(i).x;
-            int y = tmp.get(i).y;
+        int val1 = 1;
+        int val2 = 0;
+        for(int i = 0; i < arr.size(); i ++) {
+            int val = arr.get(i);
+            int x = arr1[val];
+            int y = arr2[val];
 
-            xVal *= x;
-            yVal += y;
+            val1 *= x;
+            val2 += y;
         }
-        int val = xVal - yVal;
-        return Math.abs(val);
+        int sum = val1 - val2;
+        return Math.abs(sum);
     }
 
     public static void dfs(int depth) {
         if(depth == n) {
-            if(possible()) {
+            if(arr.size() != 0) {
                 ans = Math.min(ans, calc());
             }
             return;
         }
 
-        tmp.add(arr.get(depth));
+        arr.add(depth);
         dfs(depth + 1);
-        tmp.remove(tmp.size() - 1);
+        arr.remove(arr.size() - 1);
         dfs(depth + 1);
     }
 
@@ -52,11 +41,14 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         n = Integer.parseInt(br.readLine());
+        arr1 = new int[n];
+        arr2 = new int[n];
         for(int i = 0; i < n; i ++) {
             StringTokenizer stk = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(stk.nextToken());
-            int y = Integer.parseInt(stk.nextToken());
-            arr.add(new Pair(x, y));
+            int a = Integer.parseInt(stk.nextToken());
+            int b = Integer.parseInt(stk.nextToken());
+            arr1[i] = a;
+            arr2[i] = b;
         }
 
         dfs(0);
