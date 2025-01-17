@@ -13,12 +13,23 @@ class Pair {
 public class Main {
     public static int n, ans = Integer.MAX_VALUE;
     public static int[][] grid;
-    public static boolean[][] visited;
-    public static boolean[][] range;
     public static ArrayList<Pair> arr = new ArrayList<>();
+    public static boolean[][] visited;
+    public static boolean[][] tmp;
+    public static StringBuilder sb = new StringBuilder();
     public static int[] dx = new int[]{0, -1, 0, 1, 0};
     public static int[] dy = new int[]{0, 0, 1, 0, -1};
-    public static StringBuilder sb = new StringBuilder();
+
+    public static int calc() {
+        int val = 0;
+        for(int i = 1; i <= n; i ++) {
+            for(int j = 1; j <= n; j ++) {
+                if(tmp[i][j]) val += grid[i][j];
+            }
+        }
+
+        return val;
+    }
 
     public static boolean inRange(int x, int y) {
         return 1 <= x && 1 <= y && x <= n && y <= n;
@@ -27,7 +38,7 @@ public class Main {
     public static boolean possible() {
         for(int i = 1; i <= n; i ++) {
             for(int j = 1; j <= n; j ++) {
-                range[i][j] = false;
+                tmp[i][j] = false;
             }
         }
 
@@ -38,7 +49,7 @@ public class Main {
                 int nx = x + dx[j];
                 int ny = y + dy[j];
                 if(inRange(nx, ny)) {
-                    range[nx][ny] = true;
+                    tmp[nx][ny] = true;
                 }
             }
         }
@@ -46,7 +57,7 @@ public class Main {
         int cnt = 0;
         for(int i = 1; i <= n; i ++) {
             for(int j = 1; j <= n; j ++) {
-                if(range[i][j]) cnt ++;
+                if(tmp[i][j]) cnt ++;
             }
         }
 
@@ -54,69 +65,30 @@ public class Main {
         return false;
     }
 
-    public static int calc() {
-        int cnt = 0;
-        for(int i = 1; i <= n; i ++) {
-            for(int j = 1; j <= n; j ++) {
-                if(range[i][j]) {
-                    cnt += grid[i][j];
-                }
-            }
-        }
-        return cnt;
-    }
-
     public static void dfs(int depth) {
-        if (depth == 3) {
-            for(int i = 0; i < arr.size(); i ++) {
-                sb.append(arr.get(i).x).append(arr.get(i).y);
-            }
-            sb.append("\n");
-            if (possible()) {
+        if(depth == 3) {
+//            for(int i = 0; i < arr.size(); i ++) {
+//                sb.append(arr.get(i).x).append(arr.get(i).y).append(" ");
+//            }
+//            sb.append("\n");
+            if(possible()) {
                 ans = Math.min(ans, calc());
             }
             return;
         }
 
-        for (int i = 2; i <= n - 1; i++) {
-            for (int j = 2; j <= n - 1; j++) {
-                if (!visited[i][j]) {
-                    boolean isValid = true;
-
-                    // 현재 위치와 주변 5칸을 확인
-                    for (int k = 0; k < 5; k++) {
-                        int nx = i + dx[k];
-                        int ny = j + dy[k];
-                        if (!inRange(nx, ny) || visited[nx][ny]) {
-                            isValid = false;
-                            break;
-                        }
-                    }
-
-                    if (isValid) {
-                        // 현재 위치와 주변 5칸 방문 처리
-                        for (int k = 0; k < 5; k++) {
-                            int nx = i + dx[k];
-                            int ny = j + dy[k];
-                            visited[nx][ny] = true;
-                        }
-                        arr.add(new Pair(i, j));
-
-                        dfs(depth + 1);
-
-                        // 현재 위치와 주변 5칸 방문 해제
-                        arr.remove(arr.size() - 1);
-                        for (int k = 0; k < 5; k++) {
-                            int nx = i + dx[k];
-                            int ny = j + dy[k];
-                            visited[nx][ny] = false;
-                        }
-                    }
+        for(int i = 2; i <= n - 1; i ++) {
+            for(int j = 2; j <= n - 1; j ++) {
+                if(!visited[i][j]) {
+                    visited[i][j] = true;
+                    arr.add(new Pair(i, j));
+                    dfs(depth + 1);
+                    visited[i][j] = false;
+                    arr.remove(arr.size() - 1);
                 }
             }
         }
     }
-
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -125,7 +97,7 @@ public class Main {
         n = Integer.parseInt(br.readLine());
         grid = new int[n + 1][n + 1];
         visited = new boolean[n + 1][n + 1];
-        range = new boolean[n + 1][n + 1];
+        tmp = new boolean[n + 1][n + 1];
 
         for(int i = 1; i <= n; i ++) {
             StringTokenizer stk = new StringTokenizer(br.readLine());
