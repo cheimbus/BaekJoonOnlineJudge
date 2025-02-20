@@ -12,8 +12,8 @@ class Tuple {
 
 public class Main {
     public static int n, m;
-    public static int sec = Integer.MAX_VALUE;
-    public static int max = 100000;
+    public static int time = Integer.MAX_VALUE;
+    public static int max = 100_000;
     public static boolean[] visited;
     public static Queue<Tuple> q = new LinkedList<>();
 
@@ -23,9 +23,9 @@ public class Main {
             int x = t.x;
             int y = t.y;
             visited[x] = true;
+            if(m == x) time = Math.min(time, y);
 
-            if(x == m) sec = Math.min(sec, y);
-            if(x * 2 <= max && !visited[x * 2]) q.add(new Tuple(2 * x, y));
+            if(x * 2 <= max && !visited[x * 2]) q.add(new Tuple(x * 2, y));
             if(x + 1 <= max && !visited[x + 1]) q.add(new Tuple(x + 1, y + 1));
             if(x - 1 >= 0 && !visited[x - 1]) q.add(new Tuple(x - 1, y + 1));
         }
@@ -43,7 +43,7 @@ public class Main {
         q.add(new Tuple(n, 0));
         bfs();
 
-        bw.write(sec + "");
+        bw.write(time + "");
         bw.flush();
         br.close();
     }
