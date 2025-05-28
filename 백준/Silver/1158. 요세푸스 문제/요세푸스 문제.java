@@ -1,41 +1,39 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static int n, m;
-    public static ArrayList<Integer> arr = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        Deque<Integer> dq = new LinkedList<>();
 
+        ArrayList<Integer> arr = new ArrayList<>();
         StringTokenizer stk = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(stk.nextToken());
-        m = Integer.parseInt(stk.nextToken());
 
-        Queue<Integer> st = new LinkedList<>();
+        int n = Integer.parseInt(stk.nextToken());
+        int m = Integer.parseInt(stk.nextToken());
 
         for(int i = 1; i <= n; i ++) {
-            st.add(i);
+            dq.addLast(i);
         }
 
-        while(!st.isEmpty()) {
-            for(int i = 1; i < m; i ++) {
-                int v = st.poll();
-                st.add(v);
+        int cnt = 0;
+        while(!dq.isEmpty()) {
+            cnt ++;
+            int d = dq.pollFirst();
+            if(cnt == m) {
+                cnt = 0;
+                arr.add(d);
             }
-
-            int val = st.poll();
-            arr.add(val);
+            else dq.addLast(d);
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("<");
-        for(int i = 0; i < arr.size(); i ++) {
+        for(int i = 0; i < n - 1; i ++) {
             sb.append(arr.get(i) + ", ");
         }
-
-        sb.setLength(sb.length() - 2);
-        sb.append(">");
+        sb.append(arr.get(n - 1)).append(">");
 
         bw.write(sb.toString());
         bw.flush();
