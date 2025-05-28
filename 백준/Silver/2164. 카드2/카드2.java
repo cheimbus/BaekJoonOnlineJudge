@@ -1,28 +1,24 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static int n, m;
-    public static ArrayList<Integer> arr = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        Deque<Integer> dq = new LinkedList<>();
 
         int n = Integer.parseInt(br.readLine());
-
-        Queue<Integer> q = new LinkedList<>();
-        
         for(int i = 1; i <= n; i ++) {
-            q.add(i);
+            dq.addLast(i);
         }
 
-        while(q.size() != 1) {
-            q.poll();
-            int v = q.poll();
-            q.add(v);
+        while(dq.size() != 1) {
+            dq.pollFirst();
+            int a = dq.pollFirst();
+            dq.addLast(a);
         }
 
-        bw.write(q.poll() + "");
+        bw.write(dq.pollFirst() + "");
         bw.flush();
     }
 }
