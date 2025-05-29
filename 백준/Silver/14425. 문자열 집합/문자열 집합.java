@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.Map.*;
 import java.io.*;
 
 public class Main {
@@ -11,23 +10,14 @@ public class Main {
         int n = Integer.parseInt(stk.nextToken());
         int m = Integer.parseInt(stk.nextToken());
 
-        int cnt = 0;
-
         HashSet<String> hs = new HashSet<>();
-        PriorityQueue<String> pq = new PriorityQueue<>();
-        while(n -- > 0) {
-            String s = br.readLine();
-            hs.add(s);
+        for(int i = 0; i < n; i ++) {
+            hs.add(br.readLine());
         }
 
+        int cnt = 0;
         for(int i = 0; i < m; i ++) {
-            String s = br.readLine();
-            pq.add(s);
-        }
-
-        while(!pq.isEmpty()) {
-            String s = pq.poll();
-            if(hs.contains(s)) cnt ++;
+            if(hs.contains(br.readLine())) cnt ++;
         }
 
         bw.write(cnt + "");
