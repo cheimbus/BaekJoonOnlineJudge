@@ -1,34 +1,35 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
+
 
 public class Main {
-    public static int n, m, k;
-    public static StringBuilder sb = new StringBuilder();
-    public static Queue<Integer> q = new LinkedList<>();
     public static ArrayList<Integer>[] arr;
     public static boolean[] visited1;
     public static boolean[] visited2;
+    public static int n, m, s;
+    public static Queue<Integer> q = new LinkedList<>();
+    public static StringBuilder sb = new StringBuilder();
 
     public static void dfs(int depth) {
         for(int i = 0; i < arr[depth].size(); i ++) {
-            int val = arr[depth].get(i);
-            if(!visited1[val]) {
-                visited1[val] = true;
-                sb.append(val + " ");
-                dfs(val);
+            int x = arr[depth].get(i);
+            if(!visited1[x]) {
+                visited1[x] = true;
+                sb.append(x + " ");
+                dfs(x);
             }
         }
     }
 
-    public static void bfs() {
+    public static void bfs(int val) {
         while(!q.isEmpty()) {
-            int val = q.poll();
-            for(int i = 0; i < arr[val].size(); i ++) {
-                int val2 = arr[val].get(i);
+            int x = q.poll();
+            for(int i = 0; i < arr[x].size(); i ++) {
+                int val2 = arr[x].get(i);
                 if(!visited2[val2]) {
-                    sb.append(val2 + " ");
                     visited2[val2] = true;
                     q.add(val2);
+                    sb.append(val2 + " ");
                 }
             }
         }
@@ -41,7 +42,7 @@ public class Main {
         StringTokenizer stk = new StringTokenizer(br.readLine());
         n = Integer.parseInt(stk.nextToken());
         m = Integer.parseInt(stk.nextToken());
-        k = Integer.parseInt(stk.nextToken());
+        s = Integer.parseInt(stk.nextToken());
 
         arr = new ArrayList[n + 1];
         visited1 = new boolean[n + 1];
@@ -62,17 +63,17 @@ public class Main {
             Collections.sort(arr[i]);
         }
 
-        sb.append(k + " ");
-        visited1[k] = true;
-        dfs(k);
+        visited1[s] = true;
+        sb.append(s + " ");
+        dfs(s);
         sb.append("\n");
-
-        sb.append(k + " ");
-        visited2[k] = true;
-        q.add(k);
-        bfs();
+        visited2[s] = true;
+        q.add(s);
+        sb.append(s + " ");
+        bfs(s);
 
         bw.write(sb.toString());
         bw.flush();
+        br.close();
     }
 }
